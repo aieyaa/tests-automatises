@@ -59,3 +59,16 @@ class Calculator:
         if b == 0:
             raise ZeroDivisionError("Division par zéro impossible")
         return a / b
+
+    def power(self, a, b):
+        """Calcule a^b. Retourner 1 pour 0^0."""
+        return a ** b 
+
+    def sqrt(self, a):
+        """Racine carrée. Lever ValueError si a < 0."""
+        if a < 0:
+            raise ValueError("La racine carrée d'un nombre négatif est indéfinie")
+        return a ** 0.5
+
+    def modulo(self, a, b):
+        """Reste de division. Lever ZeroDivisionError si b = 0."""

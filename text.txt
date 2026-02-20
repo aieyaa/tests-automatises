@@ -1,0 +1,16 @@
+python -m venv .venv
+.venv\Scripts\Activate
+
+pip install pytest 
+pytest-cov 
+pytest-mock
+
+pytest
+
+python run.py
+
+pytest --cov=app
+pytest --cov=app --cov-report=html
+
+terminal2 
+start htmlcov/index.html

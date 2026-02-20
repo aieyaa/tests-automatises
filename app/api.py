@@ -105,3 +105,37 @@ def delete_user(username):
         return jsonify({'message': 'Utilisateur supprimé avec succès'})
     else:
         return jsonify({'error': 'Utilisateur non trouvé'}), 404
+
+@api_bp.route('/power/<a>/<b>', methods=['GET']) 
+def power(a, b):
+    """Endpoint pour calculer a^b."""
+    try:
+        a_float = float(a)
+        b_float = float(b)
+        result = calculator.power(a_float, b_float)
+        return jsonify({'result': result})
+    except ValueError:
+        return jsonify({'error': 'Les parametres doivent etre des nombres'}), 400
+
+@api_bp.route('/sqrt/<a>', methods=['GET']) 
+def sqrt(a):
+    """Endpoint pour calculer la racine carrée de a."""
+    try:
+        a_float = float(a)
+        result = calculator.sqrt(a_float)
+        return jsonify({'result': result})
+    except ValueError:
+        return jsonify({'error': 'Le parametre doit etre un nombre positif'}), 400 
+
+@api_bp.route('/modulo/<a>/<b>', methods=['GET']) 
+def modulo(a, b):
+    """Endpoint pour calculer le reste de la division de a par b."""
+    try:
+        a_float = float(a)
+        b_float = float(b)
+        result = calculator.modulo(a_float, b_float)
+        return jsonify({'result': result})
+    except ValueError:
+        return jsonify({'error': 'Les parametres doivent etre des nombres'}), 400
+    except ZeroDivisionError:
+        return jsonify({'error': 'Division par zero impossible'}), 400
