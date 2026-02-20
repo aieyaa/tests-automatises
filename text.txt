@@ -12,5 +12,5 @@ python run.py
 pytest --cov=app
 pytest --cov=app --cov-report=html
 
-terminal2 
+# terminal2 
 start htmlcov/index.html

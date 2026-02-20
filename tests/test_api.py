@@ -167,3 +167,24 @@ def test_delete_user_not_found(client):
     response = client.delete("/api/user/unknown_user")
     assert response.status_code == 404
     assert "error" in response.get_json()
+
+def test_api_calculate_priority(client):
+    """ Test des priorités """
+    response = client.post("/api/calculate", json={"expression": "2+3*4"})
+    assert response.status_code == 200
+    assert response.get_json()["result"] == 14.0
+
+    response = client.post("/api/calculate", json={"expression": "10-4/2"})
+    assert response.get_json()["result"] == 8.0
+
+def test_api_calculate_errors(client):
+    """ Test des erreurs """
+    res_zero = client.post("/api/calculate", json={"expression": "5/0"})
+    assert res_zero.status_code == 400
+    assert res_zero.get_json()["error"] == "Division par zéro impossible"
+    res_char = client.post("/api/calculate", json={"expression": "2+x"})
+    assert res_char.status_code == 400
+    assert res_char.get_json()["error"] == "Syntaxe invalide : caractères interdits"
+    res_malformed = client.post("/api/calculate", json={"expression": "5++"})
+    assert res_malformed.status_code == 400
+    assert res_malformed.get_json()["error"] == "Expression mal formée"

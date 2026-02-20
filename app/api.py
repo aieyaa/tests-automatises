@@ -139,3 +139,19 @@ def modulo(a, b):
         return jsonify({'error': 'Les parametres doivent etre des nombres'}), 400
     except ZeroDivisionError:
         return jsonify({'error': 'Division par zero impossible'}), 400
+
+@api_bp.route('/calculate', methods=['POST'])
+def api_calculate():
+    data = request.get_json(silent=True)
+    
+    if not data or 'expression' not in data:
+        return jsonify({"error": "Expression manquante"}), 400
+    
+    try:
+        result = calculator.calculate(str(data['expression']))
+        return jsonify({"result": result}), 200
+    except ValueError as e:
+        # Capture les erreurs 
+        return jsonify({"error": str(e)}), 400
+    except Exception as e:
+        return jsonify({"error": "Erreur interne"}), 500
